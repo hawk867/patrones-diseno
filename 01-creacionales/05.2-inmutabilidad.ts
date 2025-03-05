@@ -17,20 +17,41 @@
 
 import { COLORS } from '../helpers/colors.ts';
 
+// cuando un metodo tiene mas de 2 parametros, es mejor usar un objeto
+interface PlayerProps {
+  name: string;
+  score: number;
+  level: number;
+}
+
 // 1. Clase Player inmutable
 class Player {
   readonly name: string;
   readonly score: number;
   readonly level: number;
 
-  constructor(name: string, score: number, level: number) {
-    throw new Error('Method not implemented.');
+  constructor({ name, level, score }: PlayerProps) {
+    this.name = name;
+    this.score = score;
+    this.level = level;
   }
 
   // Método copyWith para crear una copia modificada del jugador
-  copyWith({ name, score, level }: Partial<Player>): Player {
-    throw new Error('Method not implemented.');
+
+  copyWith({ name, score, level }: Partial<PlayerProps>): Player {
+    return new Player({
+      name: name ?? this.name,
+      score: score ?? this.score,
+      level: level ?? this.level,
+    });
   }
+  // copyWith({ name, score, level }: Partial<Player>): Player {
+  //   return new Player(
+  //     name ?? this.name,
+  //     score ?? this.score,
+  //     level ?? this.level
+  //   );
+  // }
 
   displayState(): void {
     console.log(`\n%cJugador: ${this.name}`, COLORS.green);
@@ -42,7 +63,11 @@ class Player {
 // 2. Código Cliente para probar
 function main() {
   // Crear jugador inicial
-  let player = new Player('Carlos', 0, 1);
+  let player = new Player({
+    name: 'Juan Perez',
+    score: 0,
+    level: 1,
+  });
   console.log('Estado inicial:');
   player.displayState();
 

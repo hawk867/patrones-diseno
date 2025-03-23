@@ -10,3 +10,11 @@
  *
  * https://refactoring.guru/es/design-patterns/adapter
  */
+
+import { LocalLogger } from "./adapter-files/local-logger.ts";
+
+const logger = new LocalLogger('01-adapter.ts');
+
+logger.writeLog('Mensaje de un log normal');
+logger.writeWarn('Una alerta normal, información');
+logger.writeError('Algo salió muy mal, error crítico');
